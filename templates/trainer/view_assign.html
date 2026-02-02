@@ -1,0 +1,87 @@
+{% extends 'trainer/trainer_index.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Assign</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            margin: 25px auto;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        caption {
+            font-size: 1.8em;
+            font-weight: bold;
+            padding: 15px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .empty-row td {
+            font-style: italic;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+<table>
+    <caption>View Assign</caption>
+
+    <thead>
+        <tr>
+            <th>Sl No</th>
+            <th>Date</th>
+            <th>From Time</th>
+            <th>To Time</th>
+            <th>Duration</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for i in data %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.from_time }}</td>
+            <td>{{ i.to_time }}</td>
+            <td>{{ i.day }}</td>
+        </tr>
+        {% empty %}
+        <tr class="empty-row">
+            <td colspan="5">No assignments available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+</body>
+</html>
+
+{% endblock %}

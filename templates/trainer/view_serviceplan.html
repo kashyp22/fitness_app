@@ -1,0 +1,64 @@
+
+{% extends 'trainer/trainer_index.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Service Plan Table</title>
+    <style>
+        /* Basic styling to make the table visible and look structured */
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        caption {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+        <caption>view Service Plan</caption>
+
+    <table>
+        <thead>
+            <tr>
+{#                <th>Sno</th>#}
+                <th>service_Name</th>
+{#                <th>Amount</th>#}
+{#                <th>Duration</th>#}
+                <th>details</th>
+                <th>fee</th>
+            </tr>
+        </thead>
+
+        {% for i in data %}
+
+        <tbody>
+            <tr>
+{#                <td>{{ forloop.counter }}</td>#}
+                <td>{{ i.service_name }}</td>
+{#                <td>{{ i.Amount }}</td>#}
+{#                <td>{{ i.Duration }}</td>#}
+                <td>{{ i.details}}</td>
+                <td>{{ i.fee}}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
+{% endblock %}

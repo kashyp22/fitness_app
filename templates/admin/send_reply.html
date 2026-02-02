@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/myapp/send_reply_post/"method="post">
+    {% csrf_token %}
+    <table border="1">
+        <tr>
+            <th>reply</th>
+            <td><input type="text" name="reply"> </td>
+        </tr>
+        <tr align="center">
+            <td colspan="2"><input type="submit" value="SEND"></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

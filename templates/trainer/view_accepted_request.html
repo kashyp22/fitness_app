@@ -1,0 +1,148 @@
+{% extends 'trainer/trainer_index.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Accepted Request Table - Action Buttons Fixed</title>
+    <style>
+        /* Base Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        /* Table Container and General Structure */
+        .table-wrapper {
+            width: 95%;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2.table-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 15px 20px 5px;
+            border-bottom: 2px solid #333;
+            margin-bottom: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Header Row Styling (thead) */
+        th {
+            border-right: 1px solid white;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 8px;
+            text-align: center;
+            color: white;
+            font-weight: normal;
+        }
+
+        /* Group 1: Standard User Info Columns (Blue background) */
+        .header-blue {
+            background-color: #007bff;
+        }
+
+        /* Group 2: Action/Plan Columns (Gray background) */
+        .header-gray {
+            background-color: #9e9e9e;
+            color: black;
+            /* Added padding-bottom to separate the column name from the button text */
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        /* Styling for the nested Add/View labels under the Gray headers */
+        .plan-actions {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: black;
+            text-transform: uppercase;
+        }
+        .plan-actions div {
+            flex-basis: 45%; /* Separate Add and View labels */
+        }
+
+        /* Table Body Styling */
+        tbody td {
+            color: #333;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #eee;
+            padding: 12px 8px;
+            vertical-align: top;
+        }
+
+        /* No Data Row Styling */
+        .no-data-row td {
+            text-align: left;
+            font-style: italic;
+            color: #888;
+            padding: 15px 10px;
+            background-color: #fcfcfc;
+            border-right: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-wrapper">
+        <h2 class="table-title">View Accepted Request</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="header-blue">Sno</th>
+                    <th class="header-blue">Date</th>
+                    <th class="header-blue">User</th>
+                    <th class="header-blue">Dob</th>
+                    <th class="header-blue">Gender</th>
+                    <th class="header-blue">Address</th>
+                    <th class="header-blue">Photo</th>
+                    <th class="header-blue">Email</th>
+                    <th class="header-blue">Contact</th>
+
+                    <th class="header-gray">
+                        Workout Plan
+                        <div class="plan-actions">
+                    <button class="action-button add-btn">ADD</button>
+                    <button class="action-button view-btn">VIEW</button>
+                        </div>
+                    </th>
+            <th class="header-gray">
+                        Diet Plan
+                        <div class="plan-actions">
+                    <button class="action-button add-btn">ADD</button>
+                    <button class="action-button view-btn">VIEW</button>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="no-data-row">
+                  <center>  <td colspan="11">No accepted requests found.</td></center>
+                </tr>
+
+                </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+{% endblock %}

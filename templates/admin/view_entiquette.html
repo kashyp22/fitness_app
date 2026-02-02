@@ -1,0 +1,89 @@
+{#{% extends 'admin/admin_index.html' %}#}
+{#{% block body %}#}
+{#<body>#}
+{#<form>#}
+{#    <table border="1">#}
+{#        <tr>#}
+{#            <td>rule</td>#}
+{#            <td>Punishment</td>#}
+{#            <td>Date</td>#}
+{#            <td></td>#}
+{#            <td></td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <td></td>#}
+{#            <td></td>#}
+{#            <td></td>#}
+{#            <td><a href="">Edit</a> </td>#}
+{#            <td><a href="">Delete</a> </td>#}
+{#        </tr>#}
+{#        <tr align="center">#}
+{#            <td colspan="7"><a href="">Add</a> </td>#}
+{#        </tr>#}
+{#    </table>#}
+{#</form>#}
+{#</body>#}
+{#{% endblock %}#}
+
+
+{% extends 'admin/admin_index.html' %}
+{% block body %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-black">
+            <h4 class="mb-0">Etiquette Rules</h4>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rule</th>
+                        <th>Punishment</th>
+                        <th>Date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for e in data %}
+                    <tr>
+                        <td>{{ e.rules }}</td>
+                        <td>{{ e.punishment }}</td>
+                        <td>{{ e.date }}</td>
+                        <td>
+                            <a href="/myapp/edit_entiquette/{{ e.id }}" class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/myapp/delete_entiquette/{{ e.id }}" class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-muted">No rules found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-center mt-3">
+                <a href="/myapp/add_etiquette/" class="btn btn-success px-4">
+                    Add New Rule
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'trainer/trainer_index.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Gym Form Table</title>
+    <style>
+        table {
+            width: 350px;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial,
+            san-serif;
+            font-size: 16px;
+        }
+        td {
+            padding:8px;
+            border:1px solid  #000;
+        }
+        .img-box {
+            height: 120px;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+        </style>
+</head>
+<body>
+<table>
+{#    <tr>#}
+{#        <td colspan="2" class="img-box">IMG</td>#}
+{#    </tr>#}
+    <tr>
+        <td>Name</td>
+        <td>{{ data.name }}</td>
+    </tr>
+
+    <tr>
+        <td>phone</td>
+        <td>{{ data.phone }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{ data.email }}</td>
+    </tr>
+    <tr>
+        <td>qualification</td>
+        <td>{{ data.qualification }}</td>
+    </tr>
+    <tr>
+        <td>place</td>
+        <td>{{ data.place }}</td>
+    </tr>
+        <tr>
+        <td>post</td>
+        <td>{{ data.post }}</td>
+    </tr>
+     <tr>
+        <td>pin</td>
+        <td>{{ data.pin }}</td>
+     </tr>
+</table>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'trainer/trainer_index.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Workout Plan Form</title>
+    <style>
+        /* Basic styling for the form container */
+        .form-container {
+            border: 2px solid black;
+            padding: 20px;
+            width: 300px;
+            margin: 30px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styling for the main title */
+        h2 {
+            text-align: center;
+            border-bottom: 1px solid black;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-weight: normal;
+        }
+
+        /* Styling for each form group (label and input) */
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-group label {
+            min-width: 90px;
+        }
+
+        /* Styling for all input fields */
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            flex-grow: 1; /* Allows the input field to take up remaining space */
+            padding: 8px;
+            border: 1px solid black;
+        }
+
+        /* Specific styling for the Details textarea */
+        .details-group {
+            display: block;
+        }
+        .details-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .details-group textarea {
+            width: 100%;
+            box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+            height: 100px;
+            resize: vertical;
+        }
+
+        /* Styling for the Add button */
+        .add-button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            border: 1px solid black;
+            background-color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Add Workout Plan</h2>
+
+        <form action="/myapp/edit_diet_plan/" method="POST">
+
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="day shift">Day_shift</label>
+                <input type="day shift" id="day shift" name="day shift" required>
+            </div>
+
+            <div class="form-group">
+                <label for="planname">Plan_Name</label>
+                <input type="text" id="planname" name="planname" required>
+            </div>
+
+           <div class="form-group">
+                <label for="category type">category_type</label>
+                <input type="category type" id="category type" name="category type" required>
+            </div>
+
+
+            <div class="details-group">
+                <label for="discription">discription</label>
+                <textarea id="discription" name="discription" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="duration">duration</label>
+                <input type="text" id="duration" name="duration" required>
+            </div>
+
+            <div class="target goal-group">
+                <label for="target goal">target_goal</label>
+                <textarea id="target goal" name="target goal" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="add-button">Add</button>
+
+        </form>
+    </div>
+
+</body>
+</html>
+{% endblock %}

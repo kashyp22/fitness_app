@@ -1,0 +1,80 @@
+{% extends 'trainer/trainer_index.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Motivational Videos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border: 2px solid blue;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: blue;
+            font-family: cursive;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: blue;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Motivational Videos</h2>
+        <form action="/myapp/add_motivational_video_post/" method="POST" enctype="multipart/form-data">
+
+        <table>
+            <tr>
+                <td>Video</td>
+                <td><input type="file" name="Video"></td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td><input type="text" placeholder="" name="Title"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button>Add</button>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}
