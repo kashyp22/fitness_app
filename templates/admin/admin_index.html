@@ -58,35 +58,47 @@
           </li>
             <ul>
 {#          <li><a href="/myapp/admin_home/" class="active"></a></li>#}
-                <li class="dropdown"><a href="#"><span>Trainer</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                {% comment %} <li class="dropdown"><a href="#"><span>Trainer</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a> {% endcomment %}
 <ul>
 {#    <li><a href="/myapp/assign_trainers/">Assign Trainer</a></li>#}
-            <li><a href="/myapp/view_trainer/">View Trainer</a></li>
+            <li><a href="/myapp/view_trainer/" class="na">Trainers</a></li>
 {#            <li><a href="/myapp/view_assigned_trainer/">Assigned Trainer</a></li>#}
         </ul>
                 </li>
                 <li>
            <ul>
-          <li><a href="/myapp/admin_home/" class="active"></a></li>
+          {% comment %} <li><a href="/myapp/admin_home/" class="active"></a></li>
           <li class="dropdown"><a href="#"><span>video</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
 <ul>
           <li><a href="/myapp/add_video/">Add Video</a></li>
           <li><a href="/myapp/view_workout_video">Workout video</a></li>
 {#              <li><a href="#">Dropdown 4</a></li>#}
         </ul>
-          </li>
+          </li> {% endcomment %}
+
          <li>
-           <ul>
+        <ul>
           <li><a href="/myapp/admin_home/" class="active"></a></li>
-          <li class="dropdown"><a href="#"><span>entiquette</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-<ul>
+          <li class="dropdown"><a href="#"><span>Entiquette</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+        <ul>
           <li><a href="/myapp/add_entiquette/">Add entiquette</a></li>
           <li><a href="/myapp/view_entiquette/">view entiquette</a></li>
-{#              <li><a href="#">Dropdown 4</a></li>#}
-
-
         </ul>
           </li>
+
+            <li>
+        <ul>
+          <li><a href="/myapp/admin_home/" class="active"></a></li>
+          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+        <ul>
+          <li><a href="/myapp/view_complaint/">Complaints</a></li>
+          <li><a href="/myapp/view_review/">Review</a></li>
+          <li><a href="/myapp/view_user/">Users</a></li>
+        </ul>
+          </li>
+
+
+
                 <li><a href="/myapp/logout/">logout</a></li>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

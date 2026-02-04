@@ -7,62 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View User Request Table</title>
     <style>
-        /* Basic styling for the table to make it visible and look structured */
         table {
             border-collapse: collapse;
-            width: 90%;
+            width: 95%;
             margin: 20px auto;
             font-family: Arial, sans-serif;
             font-size: 0.9em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         th, td {
-            border: 1px solid black;
-            padding: 8px 12px;
+            border: 1px solid #ddd;
+            padding: 10px 12px;
             text-align: left;
         }
         th {
-            background-color: #e8e8e8;
+            background-color: #f4f4f4;
             text-align: center;
         }
         caption {
-            font-size: 1.6em;
+            font-size: 1.4em;
             font-weight: bold;
             margin-bottom: 15px;
             text-align: left;
         }
-        /* Style for the action buttons */
+        .actions-cell {
+            text-align: center;
+            white-space: nowrap;
+        }
         .action-button {
-            padding: 5px 10px;
+            padding: 6px 12px;
             margin: 2px;
             border: none;
-            border-radius: 3px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 0.85em;
         }
-        .view-btn { background-color: #2196F3; color: white; } /* Blue */
-        .accept-btn { background-color: #4CAF50; color: white; } /* Green */
-        .reject-btn { background-color: #f44336; color: white; } /* Red */
-
-        /* Specific alignment for action columns */
-        .actions-cell {
-            text-align: center;
-            white-space: nowrap; /* Prevents buttons from wrapping */
-        }
+        .accept-btn { background-color: #4CAF50; color: white; }
+        .reject-btn { background-color: #f44336; color: white; }
         .photo-cell {
             text-align: center;
         }
         .photo-cell img {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             object-fit: cover;
         }
     </style>
 </head>
 <body>
+        <caption>User Requests</caption>
 
     <table>
-        <caption>View User Request</caption>
         <thead>
             <tr>
                 <th>Sno</th>
@@ -72,27 +68,60 @@
                 <th>Gender</th>
                 <th>Address</th>
                 <th>Contact</th>
-                <th>Type</th>
-                <th colspan="3">verify</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
+            {% for r in data %}
             <tr>
-                <td></td>
-                <td></td>
-                <td class="photo-cell"><img src="placeholder_photo1.jpg" alt="User Photo"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="actions-cell" colspan="3">
-
-                    <button class="action-button accept-btn">Accept</button>
-                    <button class="action-button reject-btn">Reject</button>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ r.USER.name }}</td>
+                <td class="photo-cell">
+                    <img src="{{ r.USER.photo.url }}" alt="User Photo">
                 </td>
+                <td>{{ r.USER.dob }}</td>
+                <td>{{ r.USER.gender }}</td>
+                <td>
+                    {{ r.USER.place }}<br>
+                    {{ r.USER.post }}
+
+
+
+                </td>
+                <td>
+                    {{ r.USER.phone }}<br>
+                    {{ r.USER.email }}
+
+
+
+                </td>
+                <td>{{ r.SERVICE.service_name }}</td>
+                <td>{{ r.status }}</td>
+
+                {% if r.status == "pending" %}
+
+                <td class="actions-cell">
+                    <a  href="/myapp/user_request_approve/{{ r.id }}" class="action-button accept-btn">Accept</a>
+                    <a  href="/myapp/user_request_reject/{{ r.id }}" class="action-button reject-btn">Reject</a>
+                </td>
+                {% elif r.status == "accept" %}
+                  <td class="actions-cell">
+                    <a  href="/myapp/user_request_approve/{{ r.id }}" class="action-button accept-btn">Workout</a>
+                    <a  href="/myapp/user_request_approve/{{ r.id }}" class="action-button accept-btn">Diet</a>
+                    <a  href="/myapp/user_request_reject/{{ r.id }}" class="action-button accept-btn">Payments</a>
+                </td>
+                {% else %}
+                <td>{{ i.status }}</td>
+                {% endif %}
             </tr>
-            </tbody>
+            {% empty %}
+            <tr>
+                <td colspan="11" style="text-align:center;">No requests found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
 </body>

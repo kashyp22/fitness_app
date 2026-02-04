@@ -46,10 +46,12 @@
                     {% for i in data %}
                     <tr>
                         <td>
+                            <a href="{{ i.video.url }}">
                             <video width="180" controls>
                                 <source src="{{ i.video.url }}" type="video/mp4">
                                 Your browser does not support video playback.
                             </video>
+                            </a>
                         </td>
 
                         <td>{{ i.description }}</td>

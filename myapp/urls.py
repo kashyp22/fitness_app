@@ -78,6 +78,7 @@ urlpatterns = [
     path('view_assigned_trainer/<id>',views.view_assigned_trainer),
     path('view_complaint/',views.view_complaint),
     path('view_review/',views.view_review),
+    path('view_user/',views.view_user),
     path('view_trainer/',views.view_trainer),
     path('view_service_plans/',views.view_service_plans),
     path('view_workout_plan/',views.view_workout_plan),
@@ -133,6 +134,10 @@ urlpatterns = [
     path('view_motivatioal_video/',views.view_motivatioal_video),
     path('view_profile/',views.view_profile),
     path('view_serviceplan/',views.view_serviceplan),
+    path('user_request_approve/<id>',views.user_request_approve),
+    path('user_request_reject/<id>',views.user_request_reject),
+
+    path('view_user_service_request/<id>',views.view_user_service_request),
     path('view_tips/',views.view_tips),
     path('view_user_request/',views.view_user_request),
     path('view_user_serviceplan/',views.view_user_serviceplan),
@@ -144,6 +149,17 @@ urlpatterns = [
     path('user_view_tip/',views.user_view_tip),
     path('user_view_workout_video/',views.user_view_workout_video),
     path('user_view_motivated_video/',views.user_view_motivated_video),
+
+
+    # ===============user==============
+
+    path('flutter_login/',views.flutter_login),
+    path('UserRegistration/',views.UserRegistration),
+    path('request_trainer/',views.request_trainer),
+    path('view_request_status/',views.view_request_status),
+
+
+
 
 
     ]

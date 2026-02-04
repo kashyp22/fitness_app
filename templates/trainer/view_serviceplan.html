@@ -36,11 +36,12 @@
         <thead>
             <tr>
 {#                <th>Sno</th>#}
-                <th>service_Name</th>
+                <th>Service Name</th>
 {#                <th>Amount</th>#}
 {#                <th>Duration</th>#}
-                <th>details</th>
-                <th>fee</th>
+                <th>Details</th>
+                <th>Fee</th>
+                <th>Requests</th>
             </tr>
         </thead>
 
@@ -54,6 +55,7 @@
 {#                <td>{{ i.Duration }}</td>#}
                 <td>{{ i.details}}</td>
                 <td>{{ i.fee}}</td>
+                <td><a href="/myapp/view_user_service_request/{{ i.id }}">Requests</a></td>
             </tr>
             </tbody>
         {% endfor %}

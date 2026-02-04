@@ -1,18 +1,14 @@
 {% extends 'admin/admin_index.html' %}
 {% block body %}
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Add Trainer</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
             background: #f5f5f5;
-            padding: 30px;
         }
-
         form {
             width: 450px;
             background: white;
@@ -21,52 +17,20 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             margin: auto;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 10px 0; width: 35%; }
+        td { padding: 10px 0; }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;
         }
-
-        th {
-            text-align: left;
-            padding: 10px 0;
-            width: 35%;
-        }
-
-        td {
-            padding: 10px 0;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 95%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
         input[type="submit"] {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
+            background: #007bff; color: white; border: none;
+            padding: 10px 20px; border-radius: 4px; cursor: pointer;
+            font-size: 16px; margin-top: 15px;
         }
-
-        input[type="submit"]:hover {
-            background: #0056b3;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        input[type="submit"]:hover { background: #0056b3; }
+        h2 { text-align: center; margin-bottom: 20px; }
     </style>
-
 </head>
 <body>
 
@@ -77,47 +41,47 @@
     <table>
         <tr>
             <th>Name</th>
-            <td><input type="text" name="name"></td>
+            <td><input type="text" name="name" required pattern="[A-Za-z\s]+" title="Only letters allowed"></td>
         </tr>
 
         <tr>
             <th>Email</th>
-            <td><input type="email" name="email"></td>
+            <td><input type="email" name="email" required></td>
         </tr>
 
         <tr>
             <th>Contact</th>
-            <td><input type="text" name="contact"></td>
+            <td><input type="text" name="contact" required pattern="[6789][0-9]{9}" title="Enter a valid 10-digit phone number"></td>
         </tr>
 
         <tr>
             <th>Qualification</th>
-            <td><input type="text" name="qualification"></td>
+            <td><input type="text" name="qualification" required></td>
         </tr>
 
         <tr>
             <th>Place</th>
-            <td><input type="text" name="place"></td>
+            <td><input type="text" name="place" required></td>
         </tr>
 
         <tr>
             <th>Post</th>
-            <td><input type="text" name="post"></td>
+            <td><input type="text" name="post" required></td>
         </tr>
 
         <tr>
             <th>Pin</th>
-            <td><input type="text" name="pin"></td>
+            <td><input type="text" name="pin" required pattern="[0-9]{6}" title="Enter a valid 6-digit PIN code"></td>
         </tr>
 
         <tr>
             <th>Username</th>
-            <td><input type="text" name="username"></td>
+            <td><input type="text" name="username" required minlength="4"></td>
         </tr>
 
         <tr>
             <th>Password</th>
-            <td><input type="password" name="password"></td>
+            <td><input type="password" name="password" required minlength="6" title="Password must be at least 6 characters"></td>
         </tr>
 
         <tr>

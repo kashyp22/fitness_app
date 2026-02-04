@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
 
@@ -31,7 +31,7 @@ def login_get(request):
             login(request,user)
             return redirect('/myapp/trainerindex/')
         else:
-            return redirect('/myapp/loginindex/')
+            return redirect('/myapp/logins/')
     return render(request,'admin/login_index.html')
 
 #=====================================================================
@@ -47,6 +47,8 @@ def add_service_plan_post(request):
     servicename=request.POST['service']
     details=request.POST['details']
     fee=request.POST['Fee']
+    if service.objects.filter(service_name=servicename).exists():
+        return HttpResponse('<script>alert("Not Success servicename Alreday exists please try another servicename");window.location="/myapp/add_service_plan/"</script>')
     a=service()
     a.service_name=servicename
     a.details=details
@@ -63,6 +65,10 @@ def edit_service_plan_post(request):
     servicename = request.POST['service']
     details = request.POST['details']
     fee = request.POST['Fee']
+    sid=request.session['id']
+    if service.objects.filter(service_name=servicename).exists():
+        return HttpResponse(f'<script>alert("Not Success servicename Alreday exists please try another servicename");window.location="/myapp/edit_service_plan/{sid}"</script>')
+
     a = service.objects.get(id=request.session['id'])
     a.service_name = servicename
     a.details = details
@@ -91,6 +97,13 @@ def add_trainer_post(request):
     username=request.POST['username']
     password=request.POST['password']
 
+
+    if User.objects.filter(username=username).exists():
+        return HttpResponse('<script>alert("Not Success Username Alreday exists please try another username");window.location="/myapp/add_trainer/"</script>')
+    if User.objects.filter(email=email).exists():
+        return HttpResponse('<script>alert("Not Success Email Alreday exists please try another email");window.location="/myapp/add_trainer/"</script>')
+
+    
     obj=User.objects.create_user(username=username,password=password,email=email,first_name=password)
     obj.save()
     obj.groups.add(Group.objects.get(name='Trainer'))
@@ -103,8 +116,6 @@ def add_trainer_post(request):
     b.place=place
     b.post=post
     b.pin=pin
-    b.username=username
-    b.password=password
     b.save()
     return redirect('/myapp/add_trainer/')
 
@@ -218,13 +229,19 @@ def view_assigned_trainer(request,id):
     return render(request, 'admin/view_assigned_trainer.html',{'data':ab})
 
 def view_complaint(request):
-    return render(request, 'admin/view_complaint.html')
+    data=complaint.objects.all()
+    return render(request, 'admin/view_complaint.html',{"data":data})
 
 def view_review(request):
-    return render(request, 'admin/view_review.html')
+    data=review.objects.all()
+
+    return render(request, 'admin/view_review.html',{"data":data})
 
 def view_user(request):
-    return render(request, 'admin/view_user.html')
+
+    data=user_table.objects.all()
+
+    return render(request, 'admin/view_user.html',{"data":data})
 
 def view_trainer(request):
     ab=trainer.objects.all()
@@ -300,28 +317,60 @@ def trainer_login_index(request):
     return render(request,'trainer/trainer_login_index.html')
 
 
-def add_diet_plan(request):
+def add_diet_plan(request,id):
+    request.session['did']=id
     return render(request,'trainer/add_diet_plan.html')
 
-def add_diet_plan_post(request):
-  Date=request.POST['Date']
-  Day_shift=request.POST['Day_shift']
-  Plan_Name=request.POST['Plan_Name']
-  category_type=request.POST['category_type']
-  discription=request.POST['discription']
-  duration=request.POST['duration']
-  target_goal =request.POST['target_goal']
+def add_diet_plan_post(req):
+  Date=req.POST['Date']
+  Day_shift=req.POST['Day_shift']
+  Plan_Name=req.POST['Plan_Name']
+  category_type=req.POST['category_type']
+  discription=req.POST['discription']
+  duration=req.POST['duration']
+  target_goal =req.POST['target_goal']
+
+
   g=diet_plan()
-  g.Date=Date
-  g.Day_shift=Day_shift
-  g.Plan_Name=Plan_Name
+  g.date=Date
+  g.day_shift=Day_shift
+  g.planname=Plan_Name
   g.category_type=category_type
-  g.discription=discription
+#   g.discription=discription
   g.duration=duration
-  g.target_goal=target_goal
-  g.TRAINER=trainer.objects.get(LOGIN_id=request.user.id)
+#   g.target_goal=target_goal
+  g.REQUEST=user_request.objects.get(LOGIN_id=request.user.id)
   g.save()
+
+
   return redirect('/myapp/add_diet_plan/')
+
+
+def edit_diet_plan(request):
+    return render(request,'trainer/edit_diet_plan.html')
+
+def edit_diet_plan_POST(request):
+    Date = request.POST['Date']
+    Day_shift = request.POST['Day_shift']
+    Plan_Name = request.POST['Plan_Name']
+    category_type = request.POST['category_type']
+    # discription = request.POST['discription']
+    duration = request.POST['duration']
+    # target_goal = request.POST['target_goal ']
+    g = diet_plan()
+    g.date = Date
+    g.day_shift = Day_shift
+    g.planname = Plan_Name
+    g.category_type = category_type
+    # g.discription = discription
+    g.duration = duration
+    # g.target_goal = target_goal
+    g.TRAINER = trainer.objects.get(id=trainer)
+    g.save()
+    return redirect('/myapp/edit_diet_plan/{trainer}')
+
+
+
 
 
 def add_motivational_video(request):
@@ -351,13 +400,12 @@ def delete_video(request,id):
 
 
 def view_tips(request):
-    ab=tip.objects.filter(TRAINER__LOGIN_id=request.user.id)
+    ab=tips.objects.filter(TRAINER__LOGIN_id=request.user.id)
     return render(request,'trainer/view_tips.html',{'data':ab})
 
 def delete_tips(request,id):
-    a=tip.objects.get(id=id)
+    a=tips.objects.get(id=id)
     a.delete()
-
     return redirect('/myapp/view_tips/')
 
 
@@ -368,7 +416,7 @@ def add_tips(request):
 def add_tips_post(request):
     Title = request.POST['Title']
     Description=request.POST['Description']
-    a=tip()
+    a=tips()
     a.title=Title
     a.date=datetime.now().today()
     a.description=Description
@@ -377,20 +425,20 @@ def add_tips_post(request):
     return redirect('/myapp/view_tips/')
 
 
-def add_workoutplan(request):
+def add_workoutplan(request,id):
+    request.session['rid']=id
     return render(request,'trainer/add_workoutplan.html')
 
-def add_workoutplan_post(request):
-    Date=request.POST['Date']
-    Plan_Name=request.POST['Plan_Name']
-    Video=request.POST['Video']
-    Details=request.POST['Details']
-    a=add_workoutplan()
-    a.Date=Date
-    a.Plan_Name=Plan_Name
-    a.Video=Video
-    a.Details=Details
-    a.TRAINER=trainer.objects.get(id=trainer)
+def add_workoutplan_post(req):
+    Date=req.POST['Date']
+    Plan_Name=req.POST['Plan_Name']
+    Video=req.POST['Video']
+    Details=req.POST['Details']
+    a=workout_plan()
+    a.date=Date
+    a.video=Video
+    a.details=Details
+    a.REQUEST=request.objects.get(id=request.session['rid'])
     a.save()
     return redirect('trainer/add_workoutplan/{trainer}')
 
@@ -402,38 +450,12 @@ def change_password_POST(request):
     Current_Password=request.POST['Current_Password']
     New_Password=request.POST['New_Password']
     Confirm_Password=request.POST['Confirm_Password']
-    a=change_password()
-    a.Current_Password=Current_Password
-    a.New_Password=New_Password
-    a.Confirm_Password=Confirm_Password
-    a.TRAINER = trainer.objects.get(id=trainer)
-    a.save()
+ 
     return redirect('trainer/change_password/{trainer}')
 
 
 
-def edit_diet_plan(request):
-    return render(request,'trainer/edit_diet_plan.html')
 
-def edit_diet_plan_POST(request):
-    Date = request.POST['Date']
-    Day_shift = request.POST['Day_shift']
-    Plan_Name = request.POST['Plan_Name']
-    category_type = request.POST['category_type']
-    discription = request.POST['discription']
-    duration = request.POST['duration']
-    target_goal = request.POST['target_goal ']
-    g = edit_diet_plan()
-    g.Date = Date
-    g.Day_shift = Day_shift
-    g.Plan_Name = Plan_Name
-    g.category_type = category_type
-    g.discription = discription
-    g.duration = duration
-    g.target_goal = target_goal
-    g.TRAINER = trainer.objects.get(id=trainer)
-    g.save()
-    return redirect('/myapp/edit_diet_plan/{trainer}')
 
 
 def edit_tips(request,id):
@@ -485,16 +507,38 @@ def view_serviceplan(request):
     ab=service.objects.all()
     return render(request,'trainer/view_serviceplan.html',{'data':ab})
 
+def view_user_service_request(req,id):
+    data=user_request.objects.filter(TRAINER__LOGIN_id=req.user.id,SERVICE_id=id)
+    return render(req,'trainer/view_user_request.html',{"data":data})
 
-def view_user_request(request):
-    return render(request,'trainer/view_user_request.html')
+
+def view_user_request(req):
+    data=user_request.objects.filter(TRAINER__LOGIN_id=req.user.id)
+    return render(req,'trainer/view_user_request.html',{"data":data})
+
+
+
+def user_request_approve(req,id):
+    data=user_request.objects.filter(id=id).update(status="accept")
+    return redirect('/myapp/view_user_request/')
+
+def user_request_reject(req,id):
+    data=user_request.objects.filter(id=id).update(status="reject")
+    return redirect('/myapp/view_user_request/')
+
+
+
+
+
+
 
 def view_user_serviceplan(request):
     ab=view_user_serviceplan.objects.all()
     return render(request, 'trainer/view_user_serviceplan.html')
 
 def view_workoutplan(request):
-    return render(request,'trainer/view_workoutplan.html')
+    ab=workout_plans.objects.filter(TRAINER__LOGIN_id=request.user.id)
+    return render(request,'trainer/view_workoutplan.html',{"data":ab})
 
 
 
@@ -506,16 +550,29 @@ def flutter_login(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
+        print(username,password,"aaaaaa")
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request,user)
-            if user.groups.filter(name="user").exists():
-                return JsonResponse({"task": "valid","type": "user", "lid: user.id"})
-            return JsonResponse({"task": "valid","type": "other", "lid: user.id"})
-        return JsonResponse({"task": "invalid"})
-    return JsonResponse({"task": "error", "message": "POST required"})
+            if user.groups.filter(name="User").exists():
+                return JsonResponse({"status": "ok","type": "user", "lid": user.id})
+            return JsonResponse({"status": "no","type": "other", "lid": user.id})
+        return JsonResponse({"status": "no"})
+    return JsonResponse({"status": "no", "message": "POST required"})
 
 
+def user_view_service(request):
+    l=[]
+    a=service.objects.all()
+    for i in a:
+        l.append({
+            'id':str(i.id),
+            'service_name':str(i.service_name),
+            'details':str(i.details),
+            'fee':str(i.fee),
+
+        })
+    return JsonResponse({'status':'ok','data':l})
 
 
 def user_view_trainers(request):
@@ -536,18 +593,68 @@ def user_view_trainers(request):
 
 
 
-def user_view_service(request):
-    l=[]
-    a=service.objects.all()
-    for i in a:
-        l.append({
-            'id':str(i.id),
-            'service_name':str(i.service_name),
-            'details':str(i.details),
-            'fee':str(i.fee),
 
+
+
+
+
+
+def request_trainer(req):
+    lid = req.POST['lid']
+    service_id = req.POST['service_id']
+    trainer_id = req.POST['trainer_id']
+    # if not lid or not service_id or not trainer_id:
+    #     return JsonResponse({'status': 'error', 'message': 'Missing required fields'})
+    try:
+        user = user_table.objects.get(LOGIN_id=lid)
+        trainer_obj = trainer.objects.get(id=trainer_id)
+        service_obj = service.objects.get(id=service_id)
+    except (user_table.DoesNotExist, trainer.DoesNotExist, service.DoesNotExist):
+        return JsonResponse({'status': 'error', 'message': 'Invalid user/trainer/service'})
+
+    # Check if request already exists
+    if user_request.objects.filter(USER=user, TRAINER=trainer_obj, SERVICE=service_obj).exists():
+        return JsonResponse({'status': 'error', 'message': 'Request already exists'})
+
+    # Create new request
+    user_request.objects.create(
+        USER=user,
+        TRAINER=trainer_obj,
+        SERVICE=service_obj,
+        status="pending"
+    )
+
+    return JsonResponse({'status': 'ok', 'message': 'Trainer requested successfully'})
+
+
+# views.py
+
+
+
+
+def view_request_status(request_obj):
+    lid = request_obj.GET.get('lid')
+    if not lid:
+        return JsonResponse({'status': 'error', 'message': 'Missing user id'})
+
+    try:
+        user = user_table.objects.get(LOGIN_id=lid)
+    except user_table.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'User not found'})
+
+    reqs = user_request.objects.filter(USER=user).select_related('TRAINER', 'SERVICE')
+    data = []
+    for r in reqs:
+        data.append({
+            'trainer': r.TRAINER.name,
+            'service': r.SERVICE.service_name,
+            'date': str(r.date),
+            'status': r.status,
         })
-    return JsonResponse({'status':'ok','data':l})
+
+    return JsonResponse({'status': 'ok', 'data': data})
+
+
 
 def user_view_workout_plans(request):
     l=[]
@@ -622,3 +729,60 @@ def user_view_motivated_video(request):
 
 
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
+from .models import user_table
+
+@csrf_exempt
+def UserRegistration(request):
+    if request.method == "POST":
+        try:
+            name = request.POST.get('name')
+            dob = request.POST.get('dob')   # optional if you add DOB later
+            gender = request.POST.get('gender')
+            place = request.POST.get('place')
+            district = request.POST.get('district')
+            pincode = request.POST.get('pincode')
+            email = request.POST.get('email')
+            phone = request.POST.get('number')
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            # Handle photo upload
+            photo = request.FILES.get('photo')
+            photo_name = ""
+            if photo:
+                fs = FileSystemStorage(location="media/photos/")
+                photo_name = fs.save(photo.name, photo)
+
+            # Check if username already exists
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({"status": "error", "message": "Username already exists"})
+
+            # Create Django User
+            user = User.objects.create_user(username=username, password=password)
+
+            user.groups.add(Group.objects.get(name="User"))
+            user.save()
+
+            # Save in user_table
+            user_table.objects.create(
+                LOGIN=user,
+                name=name,
+                dob=dob,
+                gender=gender,
+                photo=photo_name,
+                email=email,
+                phone=phone,
+                place=place,
+                post=district,
+                pin=pincode
+            )
+
+            return JsonResponse({"status": "ok"})
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)})
+
+    return JsonResponse({"status": "error", "message": "Invalid request"})
