@@ -1,0 +1,164 @@
+{#{% extends 'trainer/trainerhome.html' %}#}
+{##}
+{#{% block body %}#}
+{##}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title></title>#}
+{#</head>#}
+{#<body>#}
+{#<form action="/myapp/adddiet_post/" method="post">#}
+{#    {% csrf_token %}#}
+{#    <table border="2">#}
+{#        <tr>#}
+{#            <td>BMI</td>#}
+{#            <td><input type="text" name="BMI"></td>#}
+{#            <td>TYPE</td>#}
+{#            <td><input type="text" name="type"></td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <td>GENDER</td>#}
+{#            <td>#}
+{#                <input type="radio" name="gender" value="male">MALE<br>#}
+{#                <input type="radio" name="gender" value="female">FEMALE<br>#}
+{#                <input type="radio" name="gender" value="transgender">TRANSGENDER<br>#}
+{#            </td>#}
+{#            <td>AGE</td>#}
+{#            <td><input type="text" name="age"></td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <td>HEIGHT</td>#}
+{#            <td><input type="text" name="height"></td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <td>WEIGHT</td>#}
+{#            <td><input type="text" name="weight"></td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <td>DIET PLAN</td>#}
+{#            <td><input type="text" name="diet plan"></td>#}
+{##}
+{#        </tr>#}
+{#        <tr align="center">#}
+{#            <td><input type="submit" value="ADD"></td>#}
+{#        </tr>#}
+{#    </table>#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+{% extends 'trainer/trainer_index.html' %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5>Add Diet Plan</h5>
+    </div>
+    <div class="card-body">
+      <form action="/myapp/adddiet_post/" method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="bmiInput" class="form-label">BMI</label>
+         <input type="number"
+       class="form-control"
+       id="bmiInput"
+       name="BMI"
+       placeholder="Enter BMI"
+       step="0.1"
+       min="0"
+       required>
+          </div>
+          <div class="col-md-6">
+            <label for="typeInput" class="form-label">Type</label>
+            <input type="text" class="form-control" id="typeInput" name="type" placeholder="Enter type">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label d-block">Gender</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male">
+              <label class="form-check-label" for="genderMale">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female">
+              <label class="form-check-label" for="genderFemale">Female</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderTrans" value="transgender">
+              <label class="form-check-label" for="genderTrans">Transgender</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="ageInput" class="form-label">Age</label>
+{#            <input type="text" class="form-control" id="ageInput" name="age" placeholder="Enter age">#}
+              <input type="number"
+       class="form-control"
+       id="ageInput"
+       name="age"
+       placeholder="Enter age"
+       min="1"
+       max="120"
+       required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="heightInput" class="form-label">Height</label>
+              <input type="number"
+       class="form-control"
+       id="heightInput"
+       name="height"
+       placeholder="Enter height (cm)"
+       min="50"
+       max="250"
+       required>
+{#            <input type="text" class="form-control" id="heightInput" name="height" placeholder="Enter height">#}
+          </div>
+          <div class="col-md-6">
+            <label for="weightInput" class="form-label">Weight</label>
+              <input type="number"
+       class="form-control"
+       id="weightInput"
+       name="weight"
+       placeholder="Enter weight (kg)"
+       min="10"
+       max="300"
+       step="0.1"
+       required>
+{#            <input type="text" class="form-control" id="weightInput" name="weight" placeholder="Enter weight">#}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dietPlanInput" class="form-label">Diet Plan</label>
+          <input type="text" class="form-control" id="dietPlanInput" name="diet_plan" placeholder="Enter diet plan">
+        </div>
+ <div class="mb-3">
+          <label for="dietPlanInput" class="form-label">workout plan</label>
+          <input type="text" class="form-control" id="dietPlanInput" name="work_out" placeholder="Enter workout plan">
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener("keydown", function (e) {
+      if (["e", "E", "+", "-"].includes(e.key)) {
+        e.preventDefault();
+      }
+    });
+  });
+</script>
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+id,bmi,TRAINER_id,gender,type,age,height,weight,dietplan,work_out
+5,22.5,2,male,normal,25,175,69,Balanced diet with 2000 kcal,30 min cardio + full body workout
+6,18.2,2,female,underweight,20,162,48,"High protein, 2300 kcal",Light strength training 3 days/week
+7,27.9,2,male,overweight,35,180,90,"Low carb, high fiber",45 min brisk walking + HIIT twice a week
+8,31.4,2,female,obese,42,160,80,Calorie deficit diet (1500 kcal),Daily walking + low-impact aerobics
+9,24.1,2,transgender,normal,29,170,70,Standard balanced meal plan,Gym workout 4 days/week
+10,19.5,2,female,normal,22,165,53,High nutrient density foods,Pilates + light cardio
+11,28.6,2,male,overweight,30,178,91,"Low sugar, low carb diet",Cycling 40 min daily
+12,33.2,2,female,obese,45,155,80,"Strict calorie deficit, 1300 kcal",Low-impact exercises + treadmill walking
+13,17.8,2,male,underweight,19,172,53,"Muscle gain diet, 2600 kcal",Strength training 5 days/week
+14,23.0,2,female,normal,32,168,65,Mediterranean diet,Yoga + 20 min jog
+15,29.5,2,transgender,overweight,38,175,90,Low fat diet,HIIT 3 times/week
+16,20.8,2,male,normal,27,180,67,Balanced diet with lean protein,Jogging 30 minutes daily
+17,16.9,2,female,underweight,24,158,42,Calorie surplus (2500 kcal),Resistance band exercises
+18,30.8,2,male,obese,50,170,89,"Low calorie, high fiber diet",Walking + light aerobic workout
+19,26.3,2,female,overweight,28,160,67,Moderate calorie reduction,Zumba 3 times/week
+20,21.4,2,male,normal,34,182,71,Standard balanced plan,Crossfit 3 days/week
+21,34.5,2,transgender,obese,41,168,97,Calorie restricted + high fiber,Low impact cardio + stretching
+22,18.9,2,male,underweight,21,176,58,"High calorie, high protein",Strength training beginner plan
+23,23.7,2,female,normal,33,162,62,Vegetarian balanced diet,Aerobics + yoga
+24,27.1,2,male,overweight,36,174,82,Low carb + intermittent fasting,Running 3 days/week + strength training

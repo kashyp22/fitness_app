@@ -108,8 +108,8 @@
                 </td>
                 {% elif r.status == "accept" %}
                   <td class="actions-cell">
-                    <a  href="/myapp/user_request_approve/{{ r.id }}" class="action-button accept-btn">Workout</a>
-                    <a  href="/myapp/user_request_approve/{{ r.id }}" class="action-button accept-btn">Diet</a>
+                    <a  href="/myapp/view_workoutplan/{{ r.id }}" class="action-button accept-btn">Workout</a>
+{#                    <a  href="/myapp/user_request_approve/{{ r.id }}" class="action-button accept-btn">Diet</a>#}
                     <a  href="/myapp/user_request_reject/{{ r.id }}" class="action-button accept-btn">Payments</a>
                 </td>
                 {% else %}

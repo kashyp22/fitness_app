@@ -61,6 +61,8 @@
 </head>
 <body>
 
+<a href="/myapp/add_workoutplan/">Add Video</a>
+
     <table>
         <caption>View Workout Plan</caption>
         <thead>
@@ -74,17 +76,21 @@
             </tr>
         </thead>
         <tbody>
+            {% for i in data %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.date }}</td>
+                <td>{{ i.plan_name }}</td>
+                <td>  <a href="{{ i.video.url }}">
+                            <video width="180" controls>
+                                <source src="{{ i.video.url }}" type="video/mp4">
+                                Your browser does not support video playback.</video></a></td>
+                <td>{{ i.details }}</td>
                 <td class="actions-cell" colspan="3">
-
                     <button class="action-button delete-btn">DELETE</button>
                 </td>
             </tr>
+            {% endfor %}
             </tbody>
     </table>
 

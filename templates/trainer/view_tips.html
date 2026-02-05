@@ -67,8 +67,8 @@
             <tr>
                 <th>Sno</th>
                 <th>Date</th>
-                <th>Title</th>
-                <th>Discription</th>
+                <th>Tip</th>
+                <th>Details</th>
                 <th colspan="2">Action</th>
             </tr>
         </thead>
@@ -78,8 +78,8 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ i.date }}</td>
-                <td>{{ i.title }}</td>
-                <td>{{ i.description }}</td>
+                <td>{{ i.tips }}</td>
+                <td>{{ i.details }}</td>
                 <td><a href="/myapp/edit_tips/{{ i.id }}" class="btn btn-warning">Edit</a>
 
 {#                    <button class="action-button edit-btn">EDIT</button>#}

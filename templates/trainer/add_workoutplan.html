@@ -79,7 +79,7 @@
     <div class="form-container">
         <h2>Add Workout Plan</h2>
 
-        <form action="/myapp/add_workoutplan/" method="POST">
+        <form action="/myapp/add_workoutplan_post/" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="date">Date</label>
@@ -93,7 +93,7 @@
 
             <div class="form-group">
                 <label for="video">Video</label>
-                <button type="button" onclick="alert('Video selection feature would open here.')">I choose</button>
+                <input type="file" id="planname" name="video"  required>
             </div>
 
             <div class="details-group">

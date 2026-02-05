@@ -1,82 +1,26 @@
 {% extends 'trainer/trainer_index.html' %}
 {% block body %}
-{#<!DOCTYPE html>#}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Tips</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-box {
-            border: 2px solid blue;
-            padding: 20px;
-            text-align: center;
-        }
-        .form-box input[type="text"],
-        .form-box textarea {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-box button {
-            padding: 10px 20px;
-            background: blue;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .form-box button:hover {
-            background: darkblue;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        .circle {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 1px solid black;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin: 0 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            ADD TIPS
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>ADD TIPS</h4>
         </div>
-        <form action="/myapp/add_tips_post/" method="POST">
-
-        <div class="form-box">
-            <input type="text" placeholder="Title" name="Title">
-            <textarea placeholder="Description" rows="4" name="Description"></textarea>
-            <button>Add</button>
-        </div></form>
+        <div class="card-body">
+            <form action="/myapp/add_tips_post/" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="Title" placeholder="Enter tip title">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="Description" rows="4" placeholder="Enter tip description"></textarea>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
     </div>
-</body>
-</html>
+</div>
 {% endblock %}

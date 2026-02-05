@@ -336,10 +336,10 @@ def add_diet_plan_post(req):
   g.day_shift=Day_shift
   g.planname=Plan_Name
   g.category_type=category_type
-#   g.discription=discription
+  g.discription=discription
   g.duration=duration
-#   g.target_goal=target_goal
-  g.REQUEST=user_request.objects.get(LOGIN_id=request.user.id)
+  g.target_goal=target_goal
+  g.REQUEST=user_request.objects.get(LOGIN_id=req.user.id)
   g.save()
 
 
@@ -354,20 +354,110 @@ def edit_diet_plan_POST(request):
     Day_shift = request.POST['Day_shift']
     Plan_Name = request.POST['Plan_Name']
     category_type = request.POST['category_type']
-    # discription = request.POST['discription']
+    discription = request.POST['discription']
     duration = request.POST['duration']
-    # target_goal = request.POST['target_goal ']
+    target_goal = request.POST['target_goal ']
     g = diet_plan()
     g.date = Date
     g.day_shift = Day_shift
     g.planname = Plan_Name
     g.category_type = category_type
-    # g.discription = discription
+    g.discription = discription
     g.duration = duration
-    # g.target_goal = target_goal
+    g.target_goal = target_goal
     g.TRAINER = trainer.objects.get(id=trainer)
     g.save()
     return redirect('/myapp/edit_diet_plan/{trainer}')
+
+# diet ====================
+
+def adddiet(request):
+    return render(request,"trainer/add_diet.html")
+
+
+def adddiet_post(request,):
+    BMI=request.POST['BMI']
+    TYPE=request.POST['type']
+    GENDER=request.POST['gender']
+    AGE=request.POST['age']
+    HEIGHT=request.POST['height']
+    WEIGHT=request.POST['weight']
+    DIETPLAN=request.POST['diet_plan']
+    work_out=request.POST['work_out']
+
+    obj=Diet_table()
+    obj.bmi=BMI
+    obj.type=TYPE
+    obj.gender=GENDER
+    obj.age=AGE
+    obj.height=HEIGHT
+    obj.dietplan=DIETPLAN
+    obj.weight=WEIGHT
+    obj.work_out=work_out
+    obj.TRAINER=trainer.objects.get(LOGIN=request.user.id)
+    obj.save()
+    return redirect('/myapp/viewdiet/')
+
+def viewdiet(request):
+    h=Diet_table.objects.filter(TRAINER__LOGIN_id=request.user.id)
+    return render(request,"trainer/view_diet.html",{'data':h})
+
+
+def editdiet(request,id):
+    a=Diet_table.objects.get(id=id)
+    request.session['did']=id
+    return render(request,"trainer/editdiet.html",{'data':a})
+
+
+
+def editdiet_post(request):
+    BMI=request.POST['BMI']
+    TYPE=request.POST['type']
+    GENDER=request.POST['gender']
+    AGE=request.POST['age']
+    HEIGHT=request.POST['height']
+    WEIGHT=request.POST['weight']
+    DIETPLAN=request.POST['diet_plan']
+    work_out=request.POST['work_out']
+    obj=Diet_table.objects.get(id=request.session['did'])
+
+
+    obj.bmi=BMI
+    obj.type=TYPE
+    obj.gender=GENDER
+    obj.age=AGE
+    obj.height=HEIGHT
+    obj.dietplan=DIETPLAN
+    obj.weight=WEIGHT
+    obj.work_out=work_out
+    obj.TRAINER=trainer.objects.get(LOGIN=request.user.id)
+    obj.save()
+    return redirect('/myapp/viewdiet/')
+
+def deletediet(request,id):
+    Diet_table.objects.get(id=id).delete()
+    return redirect('/myapp/viewdiet/')
+
+
+
+#  ============= diet end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -378,26 +468,20 @@ def add_motivational_video(request):
 
 
 def add_motivational_video_post(request):
-  Video=request.FILES['Video']
-  Title=request.POST['Title']
-  g=motivated_video()
-  g.video=Video
-  g.title=Title
-  g.date=datetime.now().today()
-  g.TRAINER=trainer.objects.get(LOGIN_id=request.user.id)
-  g.save()
-  return redirect('/myapp/view_motivatioal_video/')
-
-
-
+    Video=request.FILES['Video']
+    Title=request.POST['Title']
+    g=motivated_video()
+    g.video=Video
+    g.title=Title
+    g.date=datetime.now().today()
+    g.TRAINER=trainer.objects.get(LOGIN_id=request.user.id)
+    g.save()
+    return redirect('/myapp/view_motivatioal_video/')
 
 def delete_video(request,id):
     a=motivated_video.objects.get(id=id)
     a.delete()
-
     return redirect('/myapp/view_motivatioal_video/')
-
-
 
 def view_tips(request):
     ab=tips.objects.filter(TRAINER__LOGIN_id=request.user.id)
@@ -408,66 +492,61 @@ def delete_tips(request,id):
     a.delete()
     return redirect('/myapp/view_tips/')
 
-
 def add_tips(request):
     return render(request,'trainer/add_tips.html')
-
 
 def add_tips_post(request):
     Title = request.POST['Title']
     Description=request.POST['Description']
     a=tips()
-    a.title=Title
+    a.tips=Title
     a.date=datetime.now().today()
-    a.description=Description
+    a.details=Description
     a.TRAINER=trainer.objects.get(LOGIN_id=request.user.id)
     a.save()
     return redirect('/myapp/view_tips/')
 
-
-def add_workoutplan(request,id):
-    request.session['rid']=id
+def add_workoutplan(request):
+    request.session['wid']=id
     return render(request,'trainer/add_workoutplan.html')
 
 def add_workoutplan_post(req):
-    Date=req.POST['Date']
-    Plan_Name=req.POST['Plan_Name']
-    Video=req.POST['Video']
-    Details=req.POST['Details']
+    Date=req.POST['date']
+    Plan_Name=req.POST['planname']
+    Video=req.FILES['video']
+    Details=req.POST['details']
     a=workout_plan()
     a.date=Date
     a.video=Video
     a.details=Details
-    a.REQUEST=request.objects.get(id=request.session['rid'])
+    a.plan_name=Plan_Name
+    a.REQUEST=user_request.objects.get(id=req.session['wid'])
     a.save()
-    return redirect('trainer/add_workoutplan/{trainer}')
+    return redirect(f"/myapp/view_workoutplan/{req.session['wid']}")
 
 
-def change_password(request):
+def trainer_change_password(request):
     return render(request,'trainer/change_password.html')
 
 def change_password_POST(request):
     Current_Password=request.POST['Current_Password']
     New_Password=request.POST['New_Password']
     Confirm_Password=request.POST['Confirm_Password']
+
+
  
     return redirect('trainer/change_password/{trainer}')
 
-
-
-
-
-
 def edit_tips(request,id):
     request.session['tid']=id
-    d=tip.objects.get(id=id)
+    d=tips.objects.get(id=id)
     return render(request,'trainer/edit_tips.html',{'data':d})
 
 
 def edit_tips_post(request):
     Title = request.POST['Title']
     Description=request.POST['Description']
-    a=tip.objects.get(id=request.session['tid'])
+    a=tips.objects.get(id=request.session['tid'])
     a.title=Title
     a.description=Description
     a.date=datetime.now().today()
@@ -475,10 +554,8 @@ def edit_tips_post(request):
     a.save()
     return redirect('/myapp/view_tips/')
 
-
 def view_accepted_request(request):
     return render(request,'trainer/view_accepted_request.html')
-
 
 def view_assign(request):
     a=assign_trainer.objects.all()
@@ -511,11 +588,9 @@ def view_user_service_request(req,id):
     data=user_request.objects.filter(TRAINER__LOGIN_id=req.user.id,SERVICE_id=id)
     return render(req,'trainer/view_user_request.html',{"data":data})
 
-
 def view_user_request(req):
     data=user_request.objects.filter(TRAINER__LOGIN_id=req.user.id)
     return render(req,'trainer/view_user_request.html',{"data":data})
-
 
 
 def user_request_approve(req,id):
@@ -526,21 +601,14 @@ def user_request_reject(req,id):
     data=user_request.objects.filter(id=id).update(status="reject")
     return redirect('/myapp/view_user_request/')
 
-
-
-
-
-
-
 def view_user_serviceplan(request):
-    ab=view_user_serviceplan.objects.all()
+    ab=service.objects.all()
     return render(request, 'trainer/view_user_serviceplan.html')
 
-def view_workoutplan(request):
-    ab=workout_plans.objects.filter(TRAINER__LOGIN_id=request.user.id)
+def view_workoutplan(request,id):
+    ab=workout_plan.objects.filter(REQUEST_id=id)
+    request.session['wid']=id
     return render(request,'trainer/view_workoutplan.html',{"data":ab})
-
-
 
 
 
@@ -574,7 +642,6 @@ def user_view_service(request):
         })
     return JsonResponse({'status':'ok','data':l})
 
-
 def user_view_trainers(request):
     l=[]
     a=trainer.objects.all()
@@ -590,14 +657,6 @@ def user_view_trainers(request):
             'pin':str(i.pin),
         })
     return JsonResponse({'status':'ok','data':l})
-
-
-
-
-
-
-
-
 
 def request_trainer(req):
     lid = req.POST['lid']
@@ -646,8 +705,10 @@ def view_request_status(request_obj):
     data = []
     for r in reqs:
         data.append({
+            'id': r.id,
             'trainer': r.TRAINER.name,
             'service': r.SERVICE.service_name,
+            'fees': r.SERVICE.fee,
             'date': str(r.date),
             'status': r.status,
         })
@@ -657,15 +718,17 @@ def view_request_status(request_obj):
 
 
 def user_view_workout_plans(request):
+    rid=request.POST['rid']
+    print(rid,"rid")
     l=[]
-    a=workout_plans.objects.all()
+    a=workout_plan.objects.filter(REQUEST_id=rid)
     for i in a:
         l.append({
             'id':str(i.id),
-            'goal':str(i.goal),
-            'workout':str(i.workout),
-            'time_per_day':str(i.time_per_day),
-
+            'date':str(i.date),
+            'video':str(i.video.url),
+            'details':str(i.details),
+            'plan_name':str(i.plan_name),
         })
     return JsonResponse({'status':'ok','data':l})
 
@@ -687,27 +750,30 @@ def user_view_diet_plan(request):
 
 def user_view_tip(request):
     l = []
-    a = tip.objects.all()
+    a = tips.objects.all()
     for i in a:
         l.append({
             'id': str(i.id),
-            'title': str(i.title),
-            'description': str(i.description),
-            'TRAINER': str(i.TRAINER),
+            'tips': str(i.tips),
+            'details': str(i.details),
+            'date': str(i.date),
+            't_name': str(i.TRAINER.name),
 
         })
     return JsonResponse({'status': 'ok', 'data': l})
 
 
-def user_view_workout_video(request):
+def user_view_motivational_video(request):
     l = []
-    a = workout_video.objects.all()
+    a = motivated_video.objects.all()
     for i in a:
         l.append({
             'id': str(i.id),
-            'video': str(i.video),
+            'video': str(i.video.url),
             'description': str(i.description),
-
+            'title': str(i.title),
+            'date': str(i.date),
+            't_name': str(i.TRAINER.name),
         })
     return JsonResponse({'status': 'ok', 'data': l})
 
@@ -722,6 +788,21 @@ def user_view_motivated_video(request):
             'description': str(i.description),
             'date': str(i.date),
 
+        })
+    return JsonResponse({'status': 'ok', 'data': l})
+
+
+
+
+def user_view_entiquette(request):
+    l = []
+    a = entiquette.objects.all()
+    for i in a:
+        l.append({
+            'id': str(i.id),
+            'rules': str(i.rules),
+            'punishment': str(i.punishment),
+            'date': str(i.date),
         })
     return JsonResponse({'status': 'ok', 'data': l})
 
@@ -786,3 +867,71 @@ def UserRegistration(request):
             return JsonResponse({"status": "error", "message": str(e)})
 
     return JsonResponse({"status": "error", "message": "Invalid request"})
+
+
+
+# =========================
+
+
+import pandas as pd
+
+def export_data(request):
+    qs = Diet_table.objects.all().values()
+    df = pd.DataFrame(qs)
+    df.to_csv("diet_data.csv", index=False)
+    return HttpResponse("Export complete")
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .predict_diet_ml import predict_diet
+
+@csrf_exempt
+@csrf_exempt
+def predict_diet_api(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        print(data,"data")
+        result = predict_diet(
+            int(data["age"]),
+            int(data["height"]),
+            int(data["weight"]),
+            data["gender"],
+            food_preference=data.get("food_preference"),
+            health_condition=data.get("health_condition")
+        )
+        print(result,"rrrrrr")
+        return JsonResponse({
+            "status": "success",
+            "bmi": result["bmi"],
+            "category": result["predicted_type"],
+            "diet_plan": result["diet"],
+            "workout_plan": result["workout"]
+        })
+
+
+
+
+from .utils import generate_health_plan
+
+
+def generate_bmi_plan_api(request):
+    if request.method == 'POST':
+        # Matching the keys sent from Flutter
+        bmi = float(request.POST.get('bmi', 0))
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        goal = request.POST.get('goal')
+        weight = request.POST.get('weight')
+        height = request.POST.get('height')
+
+        # Call the Gemini function
+        result = generate_health_plan(bmi, age, gender, goal, weight, height)
+
+        print(result,"resulttttttttt")
+
+        return JsonResponse(result)
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)

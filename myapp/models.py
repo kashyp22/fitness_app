@@ -53,6 +53,7 @@ class workout_plan(models.Model):
     date=models.DateField(auto_now_add=True)
     video = models.FileField()
     details=models.CharField(max_length=500)
+    plan_name=models.CharField(max_length=200)
 
 class assign_trainer(models.Model):
     TRAINER=models.ForeignKey(trainer,on_delete=models.CASCADE)
@@ -79,6 +80,21 @@ class diet_plan(models.Model):
     planname=models.CharField(max_length=100)
     category_type=models.CharField(max_length=100)
     duration=models.CharField(max_length=100)
+    discription=models.CharField(max_length=500)
+    target_goal=models.CharField(max_length=500)
+
+
+class Diet_table(models.Model):
+    bmi=models.CharField(max_length=100)
+    TRAINER=models.ForeignKey(trainer,on_delete=models.CASCADE)
+    gender=models.CharField(max_length=100)
+    type=models.CharField(max_length=100)
+    age=models.IntegerField()
+    height=models.IntegerField()
+    weight=models.IntegerField()
+    dietplan=models.CharField(max_length=1000)
+    work_out=models.CharField(max_length=1000)
+
 
 class tips(models.Model):
     TRAINER=models.ForeignKey(trainer,on_delete=models.CASCADE)

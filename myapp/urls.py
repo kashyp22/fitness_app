@@ -114,12 +114,25 @@ urlpatterns = [
     path('add_motivational_video/',views.add_motivational_video),
     path('delete_video/<id>', views.delete_video),
 
+
+
+    # ====================== asdfghjkl;
+
+    path('adddiet/', views.adddiet),
+    path('adddiet_post/', views.adddiet_post),
+    path('viewdiet/', views.viewdiet),
+    path('editdiet_post/', views.editdiet_post),
+    path('editdiet/<id>', views.editdiet),
+    path('deletediet/<id>', views.deletediet),
+
     path('add_motivational_video_post/',views.add_motivational_video_post),
     path('add_tips/',views.add_tips),
     path('add_tips_post/',views.add_tips_post),
     path('delete_tips/<id>', views.delete_tips),
-    path('add_workoutplan/',views.add_workoutplan),
+
+    path('add_workoutplan/<id>',views.add_workoutplan),
     path('add_workoutplan_post/',views.add_workoutplan_post),
+
     path('change_password/',views.change_password),
     path('change_password_POST/',views.change_password_POST),
     path('edit_diet_plan/',views.edit_diet_plan),
@@ -141,13 +154,13 @@ urlpatterns = [
     path('view_tips/',views.view_tips),
     path('view_user_request/',views.view_user_request),
     path('view_user_serviceplan/',views.view_user_serviceplan),
-    path('view_workoutplan/',views.view_workoutplan),
+    path('view_workoutplan/<id>',views.view_workoutplan),
     path('user_view_trainers/',views.user_view_trainers),
     path('user_view_service/',views.user_view_service),
     path('user_view_workout_plans/',views.user_view_workout_plans),
     path('user_view_diet_plan/',views.user_view_diet_plan),
     path('user_view_tip/',views.user_view_tip),
-    path('user_view_workout_video/',views.user_view_workout_video),
+    path('user_view_motivational_video/',views.user_view_motivational_video),
     path('user_view_motivated_video/',views.user_view_motivated_video),
 
 
@@ -157,6 +170,9 @@ urlpatterns = [
     path('UserRegistration/',views.UserRegistration),
     path('request_trainer/',views.request_trainer),
     path('view_request_status/',views.view_request_status),
+    path('user_view_entiquette/',views.user_view_entiquette),
+    path('generate_bmi_plan_api/',views.generate_bmi_plan_api),
+    path('predict_diet_api/',views.predict_diet_api),
 
 
 

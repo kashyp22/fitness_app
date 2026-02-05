@@ -118,7 +118,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+GEMINI_API_KEY='AIzaSyDWg1FUNQO0_BeKgxh4QWHaRXMH08vYfho'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 

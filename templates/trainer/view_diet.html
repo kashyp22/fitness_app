@@ -1,0 +1,113 @@
+{#{% extends 'trainer/trainerhome.html' %}#}
+{##}
+{#{% block body %}#}
+{##}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title></title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#<form action="/myapp/adddiet/" method="post">#}
+{#    <table>#}
+{#        <tr>#}
+{#            <td><input type="text"  ></td>#}
+{#            <td>#}
+{#<input type="submit" value="search"></td>#}
+{#        </tr>#}
+{#    </table>#}
+{#    <table border="1" class="table table-bordered">#}
+{#        <tr>#}
+{#            <td>BMI</td>#}
+{#            <td>GENDER</td>#}
+{#            <td>TYPE</td>#}
+{#            <td>AGE</td>#}
+{#            <td>HEIGHT</td>#}
+{#            <td>WEIGHT</td>#}
+{#            <td>DIET PLAN</td>#}
+{#            <td></td>#}
+{#        </tr>#}
+{#        {% for i in data %}#}
+{#        <tr>#}
+{#            <td>{{ i.bmi }}</td>#}
+{#            <td>{{ i.gender }}</td>#}
+{#            <td>{{ i.type }}</td>#}
+{#            <td>{{ i.age }}</td>#}
+{#            <td>{{ i.height }}</td>#}
+{#            <td>{{ i.weight }}</td>#}
+{#            <td>{{ i.dietplan }}</td>#}
+{#            <td><a href="/myapp/editdiet/{{ i.id }}">Edit</a><br>#}
+{#                <a href="/myapp/deletediet/{{ i.id }}" onclick="return confirm('are you sure')">Delete</a> </td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+{#    </table>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{#{% endblock %}#}
+{% extends 'trainer/trainer_index.html' %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="card">
+{#    <div class="card-header">#}
+{#      <h5>Search Diet Plans</h5>#}
+{#    </div>#}
+    <div class="card-body">
+      <form action="/myapp/adddiet/" method="post" class="row g-3 mb-4">
+        {% csrf_token %}
+{#        <div class="col-md-10">#}
+{#          <input type="text" class="form-control" name="search_term" placeholder="Enter search term…">#}
+{#        </div>#}
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary w-100">Add</button>
+        </div>
+      </form>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>BMI</th>
+              <th>GENDER</th>
+              <th>TYPE</th>
+              <th>AGE</th>
+              <th>HEIGHT</th>
+              <th>WEIGHT</th>
+              <th>DIET PLAN</th>
+                <th>Work out</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <tr>
+              <td>{{ i.bmi }}</td>
+              <td>{{ i.gender }}</td>
+              <td>{{ i.type }}</td>
+              <td>{{ i.age }}</td>
+              <td>{{ i.height }}</td>
+              <td>{{ i.weight }}</td>
+              <td>{{ i.dietplan }}</td>
+              <td>{{ i.work_out }}</td>
+              <td>
+                <a href="/myapp/editdiet/{{ i.id }}" class="btn btn-sm btn-warning mb-1">Edit</a>
+                <br>
+                <a href="/myapp/deletediet/{{ i.id }}"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
