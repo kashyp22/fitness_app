@@ -49,6 +49,79 @@
 {#</body>#}
 {#</html>#}
 {#{% endblock %}#}
+{#{% extends 'trainer/trainer_index.html' %}#}
+{#{% block body %}#}
+{#<div class="container mt-4">#}
+{#  <div class="card">#}
+{#    <div class="card-header">#}
+{#      <h5 class="mb-0">Edit Diet Plan</h5>#}
+{#    </div>#}
+{#    <div class="card-body">#}
+{#      <form action="/myapp/editdiet_post/" method="post">#}
+{#        {% csrf_token %}#}
+{#        <input type="hidden" name="id" value="{{ data.id }}">#}
+{#        <div class="row mb-3">#}
+{#          <div class="col-md-6">#}
+{#            <label for="bmiInput" class="form-label">BMI</label>#}
+{#            <input type="text" class="form-control" id="bmiInput" name="BMI" value="{{ data.bmi }}">#}
+{#          </div>#}
+{#          <div class="col-md-6">#}
+{#            <label for="typeInput" class="form-label">Type</label>#}
+{#            <input type="text" class="form-control" id="typeInput" name="type" value="{{ data.type }}">#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <div class="col-md-6">#}
+{#            <label class="form-label d-block">Gender</label>#}
+{#            <div class="form-check form-check-inline">#}
+{#              <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" {% if data.gender == 'male' %}checked{% endif %}>#}
+{#              <label class="form-check-label" for="genderMale">Male</label>#}
+{#            </div>#}
+{#            <div class="form-check form-check-inline">#}
+{#              <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female" {% if data.gender == 'female' %}checked{% endif %}>#}
+{#              <label class="form-check-label" for="genderFemale">Female</label>#}
+{#            </div>#}
+{#            <div class="form-check form-check-inline">#}
+{#              <input class="form-check-input" type="radio" name="gender" id="genderTrans" value="transgender" {% if data.gender == 'transgender' %}checked{% endif %}>#}
+{#              <label class="form-check-label" for="genderTrans">Transgender</label>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="col-md-6">#}
+{#            <label for="ageInput" class="form-label">Age</label>#}
+{#            <input type="text" class="form-control" id="ageInput" name="age" value="{{ data.age }}">#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <div class="col-md-6">#}
+{#            <label for="heightInput" class="form-label">Height</label>#}
+{#            <input type="text" class="form-control" id="heightInput" name="height" value="{{ data.height }}">#}
+{#          </div>#}
+{#          <div class="col-md-6">#}
+{#            <label for="weightInput" class="form-label">Weight</label>#}
+{#            <input type="text" class="form-control" id="weightInput" name="weight" value="{{ data.weight }}">#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="mb-3">#}
+{#          <label for="dietPlanInput" class="form-label">Diet Plan</label>#}
+{#          <input type="text" class="form-control" id="dietPlanInput" name="diet_plan" value="{{ data.dietplan }}">#}
+{#        </div>#}
+{# <div class="mb-3">#}
+{#          <label for="dietPlanInput" class="form-label">workout plan</label>#}
+{#          <input type="text" class="form-control" id="dietPlanInput" value="{{ data.work_out }}" name="work_out" placeholder="Enter workout plan">#}
+{#        </div>#}
+{#        <div class="text-end">#}
+{#          <button type="submit" class="btn btn-primary">Update</button>#}
+{#        </div>#}
+{#      </form>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#{% endblock %}#}
+
+
 {% extends 'trainer/trainer_index.html' %}
 {% block body %}
 <div class="container mt-4">
@@ -60,14 +133,26 @@
       <form action="/myapp/editdiet_post/" method="post">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ data.id }}">
+
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="bmiInput" class="form-label">BMI</label>
-            <input type="text" class="form-control" id="bmiInput" name="BMI" value="{{ data.bmi }}">
+            <label for="bmiType" class="form-label">BMI Type</label>
+            <select class="form-select" id="bmiType" name="BMI" required>
+              <option value="underweight" {% if data.bmi == 'underweight' %}selected{% endif %}>Underweight (&lt; 18.5)</option>
+              <option value="normal" {% if data.bmi == 'normal' %}selected{% endif %}>Normal (18.5 – 24.9)</option>
+              <option value="overweight" {% if data.bmi == 'overweight' %}selected{% endif %}>Overweight (25 – 29.9)</option>
+              <option value="obese" {% if data.bmi == 'obese' %}selected{% endif %}>Obese (≥ 30)</option>
+            </select>
           </div>
+
           <div class="col-md-6">
             <label for="typeInput" class="form-label">Type</label>
-            <input type="text" class="form-control" id="typeInput" name="type" value="{{ data.type }}">
+            <select class="form-select" id="typeInput" name="type" required>
+              <option value="weight_loss" {% if data.type == 'weight_loss' %}selected{% endif %}>Weight Loss</option>
+              <option value="weight_gain" {% if data.type == 'weight_gain' %}selected{% endif %}>Weight Gain</option>
+              <option value="maintenance" {% if data.type == 'maintenance' %}selected{% endif %}>Maintenance</option>
+              <option value="muscle_building" {% if data.type == 'muscle_building' %}selected{% endif %}>Muscle Building</option>
+            </select>
           </div>
         </div>
 
@@ -87,31 +172,48 @@
               <label class="form-check-label" for="genderTrans">Transgender</label>
             </div>
           </div>
+
           <div class="col-md-6">
             <label for="ageInput" class="form-label">Age</label>
-            <input type="text" class="form-control" id="ageInput" name="age" value="{{ data.age }}">
+            <input type="number" class="form-control" id="ageInput" name="age" value="{{ data.age }}" min="1" max="120" required>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="heightInput" class="form-label">Height</label>
-            <input type="text" class="form-control" id="heightInput" name="height" value="{{ data.height }}">
+            <label for="heightInput" class="form-label">Height (cm)</label>
+            <input type="number" class="form-control" id="heightInput" name="height" value="{{ data.height }}" min="50" max="250" required>
           </div>
           <div class="col-md-6">
-            <label for="weightInput" class="form-label">Weight</label>
-            <input type="text" class="form-control" id="weightInput" name="weight" value="{{ data.weight }}">
+            <label for="weightInput" class="form-label">Weight (kg)</label>
+            <input type="number" class="form-control" id="weightInput" name="weight" value="{{ data.weight }}" min="10" max="300" step="0.1" required>
           </div>
         </div>
 
         <div class="mb-3">
           <label for="dietPlanInput" class="form-label">Diet Plan</label>
-          <input type="text" class="form-control" id="dietPlanInput" name="diet_plan" value="{{ data.dietplan }}">
+          <select class="form-select" id="dietPlanInput" name="diet_plan" required>
+            <option value="keto" {% if data.dietplan == 'keto' %}selected{% endif %}>Keto</option>
+            <option value="low_carb" {% if data.dietplan == 'low_carb' %}selected{% endif %}>Low Carb</option>
+            <option value="balanced" {% if data.dietplan == 'balanced' %}selected{% endif %}>Balanced</option>
+            <option value="high_protein" {% if data.dietplan == 'high_protein' %}selected{% endif %}>High Protein</option>
+            <option value="vegetarian" {% if data.dietplan == 'vegetarian' %}selected{% endif %}>Vegetarian</option>
+            <option value="vegan" {% if data.dietplan == 'vegan' %}selected{% endif %}>Vegan</option>
+          </select>
         </div>
- <div class="mb-3">
-          <label for="dietPlanInput" class="form-label">workout plan</label>
-          <input type="text" class="form-control" id="dietPlanInput" value="{{ data.work_out }}" name="work_out" placeholder="Enter workout plan">
+
+        <div class="mb-3">
+          <label for="workoutPlanInput" class="form-label">Workout Plan</label>
+          <select class="form-select" id="workoutPlanInput" name="work_out" required>
+            <option value="cardio" {% if data.work_out == 'cardio' %}selected{% endif %}>Cardio</option>
+            <option value="strength_training" {% if data.work_out == 'strength_training' %}selected{% endif %}>Strength Training</option>
+            <option value="hiit" {% if data.work_out == 'hiit' %}selected{% endif %}>HIIT</option>
+            <option value="yoga" {% if data.work_out == 'yoga' %}selected{% endif %}>Yoga</option>
+            <option value="pilates" {% if data.work_out == 'pilates' %}selected{% endif %}>Pilates</option>
+            <option value="mixed" {% if data.work_out == 'mixed' %}selected{% endif %}>Mixed Routine</option>
+          </select>
         </div>
+
         <div class="text-end">
           <button type="submit" class="btn btn-primary">Update</button>
         </div>

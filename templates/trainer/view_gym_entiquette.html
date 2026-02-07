@@ -6,6 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View User Request Table</title>
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <style>
         /* Basic styling for the table to make it visible and look structured */
         table {
@@ -60,8 +69,9 @@
     </style>
 </head>
 <body>
+<h1>Rules</h1>
 
-    <table>
+    <table id="myTable" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Slno</th>
@@ -83,6 +93,12 @@
             {% endfor %}
 
     </table>
+
+  <script>
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
+  </script>
 
 </body>
 </html>

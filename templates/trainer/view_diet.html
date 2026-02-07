@@ -54,6 +54,15 @@
 {% block body %}
 <div class="container mt-4">
   <div class="card">
+
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 {#    <div class="card-header">#}
 {#      <h5>Search Diet Plans</h5>#}
 {#    </div>#}
@@ -64,12 +73,12 @@
 {#          <input type="text" class="form-control" name="search_term" placeholder="Enter search term…">#}
 {#        </div>#}
         <div class="col-md-2">
-          <button type="submit" class="btn btn-primary w-100">Add</button>
+          <button type="submit" class="btn btn-success w-100">Add</button>
         </div>
       </form>
 
       <div class="table-responsive">
-        <table class="table table-bordered table-striped align-middle">
+        <table class="table table-bordered table-striped align-middle" id="myTable"  style="width:100%">
           <thead class="table-light">
             <tr>
               <th>BMI</th>
@@ -105,6 +114,12 @@
             {% endfor %}
           </tbody>
         </table>
+        <script>
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
+  </script>
+
       </div>
 
     </div>

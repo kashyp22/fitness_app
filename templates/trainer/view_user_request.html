@@ -6,6 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View User Request Table</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
     <style>
         table {
             border-collapse: collapse;
@@ -56,9 +65,9 @@
     </style>
 </head>
 <body>
-        <caption>User Requests</caption>
+        <H1>User Requests</H1>
 
-    <table>
+    <table id="myTable" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Sno</th>
@@ -70,7 +79,8 @@
                 <th>Contact</th>
                 <th>Service</th>
                 <th>Status</th>
-                <th colspan="2">Actions</th>
+                <th>Actions</th>
+                <th>Chat</th>
             </tr>
         </thead>
         <tbody>
@@ -115,14 +125,21 @@
                 {% else %}
                 <td>{{ i.status }}</td>
                 {% endif %}
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="11" style="text-align:center;">No requests found</td>
-            </tr>
+
+            <td><a  href="/myapp/chat1/{{ r.USER.LOGIN_id }}" class="action-button reject-btn">Chat</a></td>
+
+{#            {% empty %}#}
+{#            <tr>#}
+{#                <td colspan="11" style="text-align:center;">No requests found</td>#}
+{#            </tr>#}
             {% endfor %}
         </tbody>
     </table>
+  <script>
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
+  </script>
 
 </body>
 </html>

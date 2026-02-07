@@ -30,11 +30,16 @@ def predict_diet(age, height, weight, gender, food_preference=None, health_condi
     encoded_type = type_encoder.transform([bmi_type])[0]
 
     input_data = np.array([[age, height, weight, gender_encoded]])
+    print(input_data,"input data")
     predicted_type_encoded = model.predict(input_data)[0]
+    print(predicted_type_encoded, "predicted_type_encoded")
     predicted_type = type_encoder.inverse_transform([predicted_type_encoded])[0]
+    print(predicted_type, "predicted_type")
+
 
     # Here you can filter DB using food preference / health condition if needed
-    result = Diet_table.objects.filter(type=predicted_type).first()
+    result = Diet_table.objects.filter(bmi=predicted_type).first()
+    print(result,"result")
 
     return {
         "bmi": bmi,

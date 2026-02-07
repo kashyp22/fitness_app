@@ -3,63 +3,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> Gym Form Table</title>
+    <title>View Profile</title>
     <style>
-        table {
-            width: 350px;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-family: Arial,
-            san-serif;
-            font-size: 16px;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+{#            padding: 20px;#}
         }
-        td {
-            padding:8px;
-            border:1px solid  #000;
+        .profile-card {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        .img-box {
-            height: 120px;
+        .profile-header {
+            background: #2c3e50;
+            color: #fff;
             text-align: center;
-            vertical-align: middle;
-            font-weight: bold;
+            padding: 30px 20px;
         }
-        </style>
+        .profile-header h2 {
+            margin: 0;
+        }
+        .profile-body {
+            padding: 20px;
+        }
+        .profile-body table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .profile-body td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .profile-body td:first-child {
+            font-weight: bold;
+            color: #2c3e50;
+            width: 30%;
+        }
+    </style>
 </head>
 <body>
-<table>
-{#    <tr>#}
-{#        <td colspan="2" class="img-box">IMG</td>#}
-{#    </tr>#}
-    <tr>
-        <td>Name</td>
-        <td>{{ data.name }}</td>
-    </tr>
-
-    <tr>
-        <td>phone</td>
-        <td>{{ data.phone }}</td>
-    </tr>
-    <tr>
-        <td>Email</td>
-        <td>{{ data.email }}</td>
-    </tr>
-    <tr>
-        <td>qualification</td>
-        <td>{{ data.qualification }}</td>
-    </tr>
-    <tr>
-        <td>place</td>
-        <td>{{ data.place }}</td>
-    </tr>
-        <tr>
-        <td>post</td>
-        <td>{{ data.post }}</td>
-    </tr>
-     <tr>
-        <td>pin</td>
-        <td>{{ data.pin }}</td>
-     </tr>
-</table>
+    <div class="profile-card">
+        <div class="profile-header">
+            <h2>{{ data.name }}</h2>
+            <p>{{ data.email }}</p>
+        </div>
+        <div class="profile-body">
+            <table>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{ data.phone }}</td>
+                </tr>
+                <tr>
+                    <td>Qualification</td>
+                    <td>{{ data.qualification }}</td>
+                </tr>
+                <tr>
+                    <td>Place</td>
+                    <td>{{ data.place }}</td>
+                </tr>
+                <tr>
+                    <td>Post</td>
+                    <td>{{ data.post }}</td>
+                </tr>
+                <tr>
+                    <td>Pin</td>
+                    <td>{{ data.pin }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
 {% endblock %}

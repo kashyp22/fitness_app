@@ -58,18 +58,27 @@
             object-fit: cover;
         }
     </style>
+      <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
 </head>
 <body>
-
-    <table>
-        <caption>VIEW TIPS </caption>
+<h1>Tips</h1>
+    <table id="myTable" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Sno</th>
                 <th>Date</th>
                 <th>Tip</th>
                 <th>Details</th>
-                <th colspan="2">Action</th>
+                <th>Action</th>
             </tr>
         </thead>
         {% for i in data %}
@@ -91,7 +100,14 @@
             </tbody>
         {% endfor %}
     </table>
-<a href="/myapp/add_tips/">add</a>
+<a href="/myapp/add_tips/" class="btn btn-success">Add New</a>
+
+  <script>
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
+  </script>
+
 </body>
 </html>
 {% endblock %}

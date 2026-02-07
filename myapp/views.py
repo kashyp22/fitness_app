@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
@@ -11,9 +11,9 @@ from myapp.models import *
 
 def logins(request):
     return render(request, 'admin/login_index.html')
-def logout(request):
-    return render(request, 'admin/login_index.html')
-
+def logout_get(request):
+    logout(request)
+    return redirect('/myapp/logins/')
 #
 # def viewfeedback(request):
 #     return render(request,'admin/vi.html')
@@ -566,7 +566,8 @@ def view_diet_plan(request):
     return render(request,'trainer/view_diet_plan.html')
 
 def view_fee_alert(request):
-    return render(request,'trainer/view_fee_alert.html')
+    data=Payment_trainer.objects.filter(REQUEST__TRAINER__LOGIN_id=request.user.id)
+    return render(request,'trainer/view_fee_alert.html',{"data":data})
 
 def view_gym_entiquette(request):
     a=entiquette.objects.all()
@@ -707,6 +708,7 @@ def view_request_status(request_obj):
         data.append({
             'id': r.id,
             'trainer': r.TRAINER.name,
+            'tlid': r.TRAINER.LOGIN.id,
             'service': r.SERVICE.service_name,
             'fees': r.SERVICE.fee,
             'date': str(r.date),
@@ -935,3 +937,248 @@ def generate_bmi_plan_api(request):
         return JsonResponse(result)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+
+# =============chat =======
+
+
+def chat1(request, id):
+    if request.user.id!='':
+        request.session["userid"] = id
+        cid = str(request.session["userid"])
+        request.session["new"] = cid
+        qry = user_table.objects.get(LOGIN_id=cid)
+        return render(request, "trainer/Chat.html", {'photo': qry.photo.url, 'name': qry.name, 'toid': cid})
+    else:
+        return HttpResponse('''<script>alert('You are not Logined');window.location='/myapp/login/'</script>''')
+
+
+def chat_view(request):
+    if request.user.id!='':
+        fromid = request.user.id
+        toid = request.session["userid"]
+        qry = user_table.objects.get(LOGIN_id=request.session["userid"])
+        from django.db.models import Q
+        res = Chat.objects.filter(Q(FROM_ID_id=fromid, TO_ID_id=toid) | Q(FROM_ID_id=toid, TO_ID_id=fromid))
+        l = []
+        for i in res:
+            l.append({
+                "id": i.id,
+                "message": i.message,
+                "to": i.TO_ID_id,
+                "date": i.date,
+                "from": i.FROM_ID_id
+            })
+        return JsonResponse({'photo': qry.photo.url, "data": l, 'name': qry.name, 'toid': request.session["userid"]})
+    else:
+        return HttpResponse('''<script>alert('You are not Logined');window.location='/myapp/login/'</script>''')
+
+
+def chat_send_web(request, msg):
+    if request.user.id!='':
+        lid = request.user.id
+        toid = request.session["userid"]
+        message = msg
+
+        import datetime
+        d = datetime.datetime.now().date()
+        chatobt = Chat()
+        chatobt.message = message
+        chatobt.TO_ID_id = toid
+        chatobt.FROM_ID_id = lid
+        chatobt.date = d
+        chatobt.save()
+    else:
+        return HttpResponse('''<script>alert('You are not Logined');window.location='/myapp/login/'</script>''')
+
+
+    return JsonResponse({"status": "ok"})
+
+# dart chat
+
+def chat_send(request):
+    FROM_id=request.POST['from_id']
+    TOID_id=request.POST['to_id']
+    msg=request.POST['message']
+    print(FROM_id,TOID_id,"aaaaaaaaaa")
+
+    from  datetime import datetime
+    c=Chat()
+    c.FROM_ID_id=FROM_id
+    c.TO_ID_id=TOID_id
+    c.message=msg
+    c.date=datetime.now().date()
+    c.time=datetime.now().time()
+    c.save()
+    return JsonResponse({'status':"ok"})
+
+def chat_view_and(request):
+    from_id=request.POST['from_id']
+    to_id=request.POST['to_id']
+    l=[]
+    data1=Chat.objects.filter(FROM_ID_id=from_id,TO_ID_id=to_id).order_by('id')
+    data2=Chat.objects.filter(FROM_ID_id=to_id,TO_ID_id=from_id).order_by('id')
+
+    data= data1 | data2
+    print(data)
+
+    for res in data:
+        l.append({'id':res.id,'from':res.FROM_ID.id,'to':res.TO_ID.id,'msg':res.message,'date':res.date})
+
+    return JsonResponse({'status':"ok",'data':l})
+
+
+# payment alert
+
+
+from django.http import JsonResponse
+from django.utils.timezone import now
+from .models import user_request, Payment_trainer
+
+def payment_alert(request):
+    lid=request.POST['lid']
+    try:
+        # Get the user_request object
+        req = user_request.objects.get(USER__LOGIN_id=lid)
+
+        if req.status.lower() == "accept":
+            fee = int(req.SERVICE.fee)
+
+            # Check if payment already exists for this month
+            exists = Payment_trainer.objects.filter(
+                REQUEST=req,
+                date__year=now().year,
+                date__month=now().month
+            ).exists()
+
+            if not exists:
+                payment = Payment_trainer.objects.create(
+                    REQUEST=req,
+                    amount=fee,
+                    status="pending",
+                    date=now().date()
+                )
+                data = {
+                    "status": "ok",
+                    "message": "Payment alert created",
+                    "payment_id": payment.id,
+                    "amount": payment.amount,
+                    "service": req.SERVICE.service_name,
+                    "user": req.USER.id,
+                    "trainer": req.TRAINER.id,
+                    "pstatus": payment.status,
+                    "date": str(payment.date)
+                }
+            else:
+                data = {
+                    "success": False,
+                    "message": "Payment alert already exists for this month",
+                    "service": req.SERVICE.service_name,
+                    "amount": fee
+                }
+        else:
+            data = {
+                "success": False,
+                "message": "Request not accepted yet",
+                "status": req.status
+            }
+
+    except user_request.DoesNotExist:
+        data = {
+            "success": False,
+            "message": "User request not found"
+        }
+    print(data,"data")
+    return JsonResponse(data)
+
+
+
+from django.http import JsonResponse
+from django.utils.timezone import now
+from .models import Payment_trainer, user_request
+
+def view_payment_alert(request):
+    lid = request.POST.get('lid')
+    try:
+        # Get the user_request object
+        req = user_request.objects.get(USER__LOGIN_id=lid)
+
+        # Fetch all payment alerts that are pending and not yet viewed
+        payments = Payment_trainer.objects.filter(
+            REQUEST=req,
+            status="pending",
+            view_status=False
+        ).order_by('-date')
+
+        if payments.exists():
+            alerts = []
+            for p in payments:
+                alerts.append({
+                    "payment_id": p.id,
+                    "amount": p.amount,
+                    "service": req.SERVICE.service_name,
+                    "trainer": req.TRAINER.id,
+                    "user": req.USER.id,
+                    "pstatus": p.status,
+                    "date": str(p.date)
+                })
+                # Mark this alert as viewed
+                p.view_status = True
+                p.save(update_fields=["view_status"])
+
+            data = {
+                "status": "ok",
+                "alerts": alerts
+            }
+        else:
+            data = {
+                "success": False,
+                "message": "No payment alerts found"
+            }
+
+    except user_request.DoesNotExist:
+        data = {
+            "success": False,
+            "message": "User request not found"
+        }
+
+    return JsonResponse(data)
+
+from django.http import JsonResponse
+from django.utils.timezone import now
+from .models import Payment_trainer
+
+def view_pending_payments(request):
+    lid = request.POST.get('lid')  # login id from frontend
+    payments = Payment_trainer.objects.filter(
+        REQUEST__USER__LOGIN_id=lid,
+        # status="pending"
+    )
+
+    data = []
+    for p in payments:
+        data.append({
+            "payment_id": p.id,
+            "amount": p.amount,
+            "service": p.REQUEST.SERVICE.service_name,
+            "user": p.REQUEST.USER.id,
+            "trainer": p.REQUEST.TRAINER.id,
+            "status": p.status,
+            "date": str(p.date)
+        })
+
+    return JsonResponse({"data": data})
+
+
+
+def user_payment(request):
+    pid=request.POST['pid']
+    Payment_trainer.objects.filter(id=pid).update(status="paid")
+    return JsonResponse({"status":"ok"})
+
+
+
+
+
+

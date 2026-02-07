@@ -37,77 +37,67 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
-        <h1 class="sitename">Strive</h1><span>.</span>
-      </a>
+    <!-- Logo -->
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <!-- Uncomment if you want an image logo -->
+      <!-- <img src="assets/img/logo.webp" alt="Strive Logo"> -->
+      <h1 class="sitename">Strive</h1><span>.</span>
+    </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/myapp/admin_home/" class="active">Home</a></li>
-          <li class="dropdown"><a href="#"><span>Service</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-<ul>
-              <li><a href="/myapp/add_service_plan/">Add service</a></li>
-              <li><a href="/myapp/view_service_plans">View service</a></li>
-{#              <li><a href="#">Dropdown 4</a></li>#}
-            </ul>
-          </li>
-            <ul>
-{#          <li><a href="/myapp/admin_home/" class="active"></a></li>#}
-                {% comment %} <li class="dropdown"><a href="#"><span>Trainer</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a> {% endcomment %}
-<ul>
-{#    <li><a href="/myapp/assign_trainers/">Assign Trainer</a></li>#}
-            <li><a href="/myapp/view_trainer/" class="na">Trainers</a></li>
-{#            <li><a href="/myapp/view_assigned_trainer/">Assigned Trainer</a></li>#}
-        </ul>
-                </li>
-                <li>
-           <ul>
-          {% comment %} <li><a href="/myapp/admin_home/" class="active"></a></li>
-          <li class="dropdown"><a href="#"><span>video</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-<ul>
-          <li><a href="/myapp/add_video/">Add Video</a></li>
-          <li><a href="/myapp/view_workout_video">Workout video</a></li>
-{#              <li><a href="#">Dropdown 4</a></li>#}
-        </ul>
-          </li> {% endcomment %}
+    <!-- Navigation -->
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="/myapp/admin_home/" class="active">Home</a></li>
 
-         <li>
-        <ul>
-          <li><a href="/myapp/admin_home/" class="active"></a></li>
-          <li class="dropdown"><a href="#"><span>Entiquette</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-        <ul>
-          <li><a href="/myapp/add_entiquette/">Add entiquette</a></li>
-          <li><a href="/myapp/view_entiquette/">view entiquette</a></li>
-        </ul>
-          </li>
+        <!-- Service Dropdown -->
+        <li class="dropdown">
+          <a href="#"><span>Service</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="/myapp/add_service_plan/">Add Service</a></li>
+            <li><a href="/myapp/view_service_plans/">View Service</a></li>
+          </ul>
+        </li>
 
-            <li>
-        <ul>
-          <li><a href="/myapp/admin_home/" class="active"></a></li>
-          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-        <ul>
-          <li><a href="/myapp/view_complaint/">Complaints</a></li>
-          <li><a href="/myapp/view_review/">Review</a></li>
-          <li><a href="/myapp/view_user/">Users</a></li>
-        </ul>
-          </li>
+        <!-- Trainers -->
+        <li><a href="/myapp/view_trainer/">Trainers</a></li>
 
+        <!-- Entiquette Dropdown -->
+          <li><a href="/myapp/view_entiquette/">Entiquette</a></li>
 
+{#        <li class="dropdown">#}
+{#          <a href="#"><span>Entiquette</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>#}
+{#          <ul>#}
+{#            <li><a href="/myapp/add_entiquette/">Add Entiquette</a></li>#}
+{#            <li><a href="/myapp/view_entiquette/">View Entiquette</a></li>#}
+{#          </ul>#}
+{#        </li>#}
 
-                <li><a href="/myapp/logout/">logout</a></li>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <!-- More Dropdown -->
+        <li class="dropdown">
+          <a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="/myapp/view_complaint/">Complaints</a></li>
+            <li><a href="/myapp/view_review/">Review</a></li>
+            <li><a href="/myapp/view_user/">Users</a></li>
+          </ul>
+        </li>
 
-      <a class="cta-btn" href="#about">Get Started</a>
+        <!-- Logout -->
+{#        <li><a href="/myapp/logout/">Logout</a></li>#}
+      </ul>
 
-    </div>
-  </header>
+      <!-- Mobile Nav Toggle -->
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
 
+    <!-- CTA Button -->
+    <a class="cta-btn" href="/myapp/logout/">Log out</a>
+
+  </div>
+</header>
   <main class="main">
 
     <!-- Hero Section -->

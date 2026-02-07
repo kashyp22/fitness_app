@@ -103,7 +103,7 @@ urlpatterns = [
     path('edit_entiquette/<id>',views.edit_entiquette),
     path('edit_entiquette_post/',views.edit_entiquette_post),
     path('edit_entiquette_post/',views.edit_entiquette_post),
-    path('logout/',views.logout),
+    path('logout/',views.logout_get),
 
 
 
@@ -175,6 +175,22 @@ urlpatterns = [
     path('predict_diet_api/',views.predict_diet_api),
 
 
+    # ====================chat ============
+
+
+    path('chat1/<id>', views.chat1, name='chat1'),
+    path('chat_view/', views.chat_view, name='chat_view'),
+    path('chat_send_web/<msg>', views.chat_send_web, name='chat_send_web'),
+
+#     flutter chat
+    path('chat_send/', views.chat_send, name='chat_send'),
+    path('chat_view_and/', views.chat_view_and, name='chat_view_and'),
+
+    # payment alert
+    path('payment_alert/', views.payment_alert, name='payment_alert'),
+    path('view_pending_payments/', views.view_pending_payments, name='view_pending_payments'),
+    path('view_payment_alert/', views.view_payment_alert, name='view_payment_alert'),
+    path('user_payment/', views.user_payment, name='user_payment'),
 
 
 

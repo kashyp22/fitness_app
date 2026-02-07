@@ -63,8 +63,8 @@ class assign_trainer(models.Model):
     date=models.DateField(auto_now_add=True)
 
 class Chat(models.Model):
-    FROM = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fr")
-    TO = models.ForeignKey(User,on_delete=models.CASCADE,related_name="to")
+    FROM_ID = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fr")
+    TO_ID = models.ForeignKey(User,on_delete=models.CASCADE,related_name="to")
     date=models.DateField(auto_now_add=True)
     message=models.CharField(max_length=100)
 
@@ -114,6 +114,7 @@ class Payment_trainer(models.Model):
     status=models.CharField(max_length=20,default="paid")
     date=models.DateField(auto_now_add=True)
     amount=models.IntegerField()
+    view_status=models.BooleanField(default=False)
 
 
 

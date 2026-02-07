@@ -6,6 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>View Assign</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <style>
         body {
@@ -29,7 +36,7 @@
         }
 
         th {
-            background-color: #007bff;
+            background-color: #b8b4bc;
             color: white;
             padding: 12px;
             text-align: center;
@@ -49,9 +56,9 @@
 </head>
 
 <body>
+    <h1>View Assign</h1>
 
-<table>
-    <caption>View Assign</caption>
+<table id="myTable" class="display" style="width:100%">
 
     <thead>
         <tr>
@@ -72,14 +79,20 @@
             <td>{{ i.to_time }}</td>
             <td>{{ i.day }}</td>
         </tr>
-        {% empty %}
-        <tr class="empty-row">
-            <td colspan="5">No assignments available</td>
-        </tr>
+{#        {% empty %}#}
+{#        <tr class="empty-row">#}
+{#            <td colspan="5">No assignments available</td>#}
+{#        </tr>#}
         {% endfor %}
     </tbody>
 
 </table>
+
+  <script>
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
+  </script>
 
 </body>
 </html>
